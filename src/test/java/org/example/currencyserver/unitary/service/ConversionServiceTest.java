@@ -9,7 +9,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.List;
 
-import org.example.currencyserver.integration.SwopClient;
+import org.example.currencyserver.client.SwopClient;
 import org.example.currencyserver.model.Currency;
 import org.example.currencyserver.model.Rate;
 import org.example.currencyserver.service.ConversionService;

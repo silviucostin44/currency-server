@@ -1,4 +1,4 @@
-package org.example.currencyserver.integration;
+package org.example.currencyserver.client;
 
 import java.util.List;
 
@@ -7,6 +7,7 @@ import org.example.currencyserver.model.Rate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Component;
@@ -21,7 +22,7 @@ public class SwopClient {
     private final RestClient restClient;
 
     @Autowired
-    public SwopClient(RestClient.Builder restClientBuilder) {
+    public SwopClient(final RestClient.Builder restClientBuilder/*, final CacheManager cacheManager*/) {
         this.restClient = restClientBuilder.build();
     }
 
@@ -33,6 +34,7 @@ public class SwopClient {
                 });
     }
 
+    @Cacheable(cacheNames = "rates", key = "#baseCurrency + #quoteCurrency", cacheManager = "rates-cache-manager")
     public Rate fetchSimpleRate(final String baseCurrency, final String quoteCurrency) {
         return restClient.get()
                 .uri("/rates/{baseCurrency}/{quoteCurrency}", baseCurrency, quoteCurrency)

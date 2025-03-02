@@ -16,7 +16,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.example.currencyserver.integration.SwopClient;
+import org.example.currencyserver.client.SwopClient;
 import org.example.currencyserver.model.Currency;
 import org.example.currencyserver.model.Rate;
 import org.junit.jupiter.api.BeforeAll;

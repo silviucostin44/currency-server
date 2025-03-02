@@ -1,4 +1,4 @@
-package org.example.currencyserver.configuration;
+package org.example.currencyserver.configuration.client;
 
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;

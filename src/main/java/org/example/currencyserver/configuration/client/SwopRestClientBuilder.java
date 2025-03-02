@@ -1,8 +1,8 @@
-package org.example.currencyserver.configuration;
+package org.example.currencyserver.configuration.client;
 
 import java.io.IOException;
 
-import org.example.currencyserver.integration.SwopClient;
+import org.example.currencyserver.client.SwopClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
