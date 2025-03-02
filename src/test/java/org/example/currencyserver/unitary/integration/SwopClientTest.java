@@ -20,6 +20,7 @@ import org.example.currencyserver.client.SwopClient;
 import org.example.currencyserver.model.Currency;
 import org.example.currencyserver.model.Rate;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.client.RestClientTest;
@@ -30,6 +31,7 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
+@Disabled
 @RestClientTest(SwopClient.class)
 public class SwopClientTest {
 

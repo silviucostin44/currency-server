@@ -1,12 +1,15 @@
 package org.example.currencyserver.client;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.example.currencyserver.model.Currency;
 import org.example.currencyserver.model.Rate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpStatusCode;
@@ -21,9 +24,12 @@ public class SwopClient {
 
     private final RestClient restClient;
 
+    private final CacheManager cacheManager;
+
     @Autowired
-    public SwopClient(final RestClient.Builder restClientBuilder/*, final CacheManager cacheManager*/) {
+    public SwopClient(final RestClient.Builder restClientBuilder, final CacheManager cacheManager) {
         this.restClient = restClientBuilder.build();
+        this.cacheManager = cacheManager;
     }
 
     public List<Currency> fetchAvailableCurrencies() {
@@ -36,7 +42,14 @@ public class SwopClient {
 
     @Cacheable(cacheNames = "rates", key = "#baseCurrency + #quoteCurrency", cacheManager = "rates-cache-manager")
     public Rate fetchSimpleRate(final String baseCurrency, final String quoteCurrency) {
-        return restClient.get()
+        final String key = baseCurrency + quoteCurrency;
+        Cache cache = Objects.requireNonNull(cacheManager.getCache("rates"));
+        Rate rate = cache.get(key, Rate.class);
+        if (rate != null) {
+            return rate;
+        }
+
+        Rate fetchedRate = restClient.get()
                 .uri("/rates/{baseCurrency}/{quoteCurrency}", baseCurrency, quoteCurrency)
                 .retrieve()
                 .onStatus(status -> status.isSameCodeAs(HttpStatusCode.valueOf(403)),
@@ -47,5 +60,7 @@ public class SwopClient {
                               throw new RestClientException(errorMessage);
                           })
                 .body(Rate.class);
+        cache.put(key, fetchedRate);
+        return fetchedRate;
     }
 }
