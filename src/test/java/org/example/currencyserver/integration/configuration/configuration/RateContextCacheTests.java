@@ -53,7 +53,7 @@ class RateContextCacheTests {
         mockClient = AopTestUtils.getTargetObject(swopClient);
 
         reset(mockClient);
-        Objects.requireNonNull(cacheManager.getCache("currencies")).invalidate();
+        Objects.requireNonNull(cacheManager.getCache("rates")).invalidate();
 
         dummyRate = new Rate(EUR, USD, 1.5d);
         when(mockClient.fetchSimpleRate(EUR, USD)).thenReturn(dummyRate);

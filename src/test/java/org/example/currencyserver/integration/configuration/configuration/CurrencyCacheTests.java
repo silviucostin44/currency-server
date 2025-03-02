@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import java.util.List;
 import java.util.Objects;
 
+import com.github.benmanes.caffeine.cache.Cache;
 import org.example.currencyserver.model.Currency;
 import org.example.currencyserver.service.ConversionService;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,7 +16,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.interceptor.SimpleKey;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -31,18 +31,18 @@ public class CurrencyCacheTests {
     @Autowired
     private ConversionService conversionService;
 
-    private Cache cache;
+    private Cache<Object, Object> nativeCache;
 
     @BeforeEach
     public void setup() {
-        cache = Objects.requireNonNull(cacheManager.getCache("currencies"));
+        nativeCache = (Cache) Objects.requireNonNull(cacheManager.getCache("currencies")).getNativeCache();
     }
 
     @Test
     void testCachedValue() {
         List<Currency> availableCurrencies = conversionService.getAvailableCurrencies();
 
-        List cachedCurrencies = cache.get(SimpleKey.EMPTY, List.class);
+        List cachedCurrencies = (List) nativeCache.getIfPresent(SimpleKey.EMPTY);
 
         assertEquals(availableCurrencies, cachedCurrencies);
     }
@@ -51,12 +51,13 @@ public class CurrencyCacheTests {
     void testCacheCapacityRules() {
         conversionService.getAvailableCurrencies();
 
-        assertNotNull(cache.get(SimpleKey.EMPTY));
+        assertNotNull(nativeCache.getIfPresent(SimpleKey.EMPTY));
 
         SimpleKey someKey = new SimpleKey("someKey");
-        cache.put(someKey, new Object());
-        assertNull(cache.get(SimpleKey.EMPTY));
-        assertNotNull(cache.get(someKey));
+        nativeCache.put(someKey, new Object());
+        nativeCache.cleanUp();
+        assertNull(nativeCache.getIfPresent(SimpleKey.EMPTY));
+        assertNotNull(nativeCache.getIfPresent(someKey));
 
     }
 
