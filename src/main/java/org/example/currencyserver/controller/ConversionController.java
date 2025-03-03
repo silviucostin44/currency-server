@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/conversion")
+@RequestMapping("/conversion/v1/")
 public class ConversionController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ConversionController.class.getSimpleName());
