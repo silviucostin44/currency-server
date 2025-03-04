@@ -82,7 +82,7 @@ public class SwopClientTest {
     }
 
     @Test
-    public void testFetchSimpleRate_errorStatus403() throws JsonProcessingException {
+    public void testFetchSimpleRate_errorStatus403() {
         final String Euro = "Euro";
         URI uri = convertUri.expand(Euro, USD).toUri();
 
