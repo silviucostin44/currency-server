@@ -9,5 +9,4 @@ class CurrencyServerApplicationTests {
     @Test
     void contextLoads() {
     }
-    // todo: complete from sec-aid-server
 }

@@ -1,4 +1,4 @@
-package org.example.currencyserver.integration.configuration.configuration;
+package org.example.currencyserver.integration.configuration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -20,6 +20,9 @@ import org.springframework.cache.CacheManager;
 import org.springframework.cache.interceptor.SimpleKey;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+/**
+ * Integration test for currency caching in a spring boot context.
+ */
 @SpringBootTest()
 @ExtendWith(SpringExtension.class)
 public class CurrencyCacheTests {

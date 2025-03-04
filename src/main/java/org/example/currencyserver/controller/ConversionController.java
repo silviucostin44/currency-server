@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * REST request controller class for the currency conversion.
+ */
 @CrossOrigin("http://localhost:3000")
 @RequiredArgsConstructor
 @RestController
@@ -24,6 +27,11 @@ public class ConversionController {
 
     private final ConversionService conversionService;
 
+    /**
+     * Maps incoming requests for retrieving all available currencies.
+     *
+     * @return a list of currencies.
+     */
     @GetMapping("/currencies")
     public List<Currency> getAvailableCurrencies() {
         LOGGER.info("Incoming request for: getAvailableCurrencies");
@@ -32,6 +40,14 @@ public class ConversionController {
         return availableCurrencies;
     }
 
+    /**
+     * Maps incoming requests for converting an amount from a currency to another.
+     *
+     * @param base   the currency to convert from.
+     * @param quote  the currency to convert to.
+     * @param amount the amount to convert, expressed in currency.
+     * @return a numeric value as the converted amount.
+     */
     @GetMapping("/convert/{base}/{quote}")
     public double convert(@PathVariable() String base,
                           @PathVariable String quote,

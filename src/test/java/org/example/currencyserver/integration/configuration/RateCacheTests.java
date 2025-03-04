@@ -1,10 +1,9 @@
-package org.example.currencyserver.integration.configuration.configuration;
+package org.example.currencyserver.integration.configuration;
 
 import static org.example.currencyserver.TestingConstants.EUR;
 import static org.example.currencyserver.TestingConstants.USD;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Objects;
 
@@ -20,6 +19,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cache.CacheManager;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+/**
+ * Integration test for rates caching in a spring boot context.
+ */
 @SpringBootTest()
 @ExtendWith(SpringExtension.class)
 public class RateCacheTests {
@@ -58,7 +60,7 @@ public class RateCacheTests {
 
         nativeCache.put("rate191", new Object());
         nativeCache.cleanUp();
-        assertTrue(nativeCache.asMap().size() == 191);
+        assertEquals(191, nativeCache.asMap().size());
         assertNotNull(nativeCache.getIfPresent("rate191"));
 
     }

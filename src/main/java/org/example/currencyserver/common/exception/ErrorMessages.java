@@ -1,5 +1,8 @@
 package org.example.currencyserver.common.exception;
 
+/**
+ * Constants encapsulation class regarding error messages.
+ */
 public class ErrorMessages {
 
     public static final String CLIENT_ERROR_MESSAGE_403 =

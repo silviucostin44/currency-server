@@ -1,4 +1,4 @@
-package org.example.currencyserver.unitary.integration;
+package org.example.currencyserver.unitary.client;
 
 import static org.example.currencyserver.TestDummyDataUtil.createDummyCurrencyList;
 import static org.example.currencyserver.TestingConstants.EUR;
@@ -17,6 +17,7 @@ import java.util.List;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.currencyserver.client.SwopClient;
+import org.example.currencyserver.common.exception.ErrorMessages;
 import org.example.currencyserver.model.Currency;
 import org.example.currencyserver.model.Rate;
 import org.junit.jupiter.api.BeforeAll;
@@ -93,7 +94,7 @@ public class SwopClientTest {
                 assertThrows(RestClientException.class, () -> swopClient.fetchSimpleRate(Euro, USD));
         server.verify();
         assertEquals(
-                "Request to SWOP for simple rate failed with 403 error status. Please check the format of the currencies or the ApiKey",
+                ErrorMessages.CLIENT_ERROR_MESSAGE_403,
                 restClientException.getMessage());
     }
 

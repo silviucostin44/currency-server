@@ -25,6 +25,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
+/**
+ * Integration tests with actual REST requests against the Swap server.
+ */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ConversionControllerMappingTest {
 
@@ -35,7 +38,7 @@ public class ConversionControllerMappingTest {
 
     @BeforeAll
     static void setUpBeforeClass() {
-        convertUri = UriComponentsBuilder.fromUriString("/conversion/convert/{base}/{quote}")
+        convertUri = UriComponentsBuilder.fromUriString("/conversion/v1/convert/{base}/{quote}")
                 .queryParam("amount", "{amount}")
                 .encode()
                 .build();
@@ -44,7 +47,7 @@ public class ConversionControllerMappingTest {
     @Test
     public void testGetAvailableCurrencies() {
         ResponseEntity<Currency[]> response =
-                restTemplate.getForEntity("/conversion/currencies", Currency[].class);
+                restTemplate.getForEntity("/conversion/v1/currencies", Currency[].class);
 
         assertSame(HttpStatus.OK, response.getStatusCode());
 
@@ -96,6 +99,6 @@ public class ConversionControllerMappingTest {
 
         assertSame(HttpStatus.NOT_FOUND, response.getStatusCode());
         String body = Objects.requireNonNull(response.getBody());
-        assertTrue(body.contains("No static resource conversion/convert"));
+        assertTrue(body.contains("No static resource conversion/v1/convert"));
     }
 }

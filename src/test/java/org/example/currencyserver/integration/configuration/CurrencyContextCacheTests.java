@@ -1,4 +1,4 @@
-package org.example.currencyserver.integration.configuration.configuration;
+package org.example.currencyserver.integration.configuration;
 
 import static org.example.currencyserver.TestDummyDataUtil.createDummyCurrencyList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -29,6 +29,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.util.AopTestUtils;
 
+/**
+ * Integration test for currency caching in a simulated context with the mocking of the containing class.
+ */
 @ContextConfiguration
 @ExtendWith(SpringExtension.class)
 class CurrencyContextCacheTests {
@@ -78,6 +81,9 @@ class CurrencyContextCacheTests {
         verify(mockService, times(2)).getAvailableCurrencies();
     }
 
+    /**
+     * Test caching configuration, mimicking the original one for the currency cache manager.
+     */
     @EnableCaching
     @Configuration
     public static class CachingTestConfiguration {

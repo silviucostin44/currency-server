@@ -24,6 +24,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClientException;
 
+/**
+ * Integration tests with the controller method calls against the Swap server.
+ */
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 public class ConversionControllerTest {

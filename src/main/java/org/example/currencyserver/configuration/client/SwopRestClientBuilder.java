@@ -15,6 +15,9 @@ import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestClient;
 
+/**
+ * Configuration class for the RestClient builder bean.
+ */
 @Configuration
 public class SwopRestClientBuilder {
 

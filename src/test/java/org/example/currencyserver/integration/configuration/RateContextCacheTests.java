@@ -1,4 +1,4 @@
-package org.example.currencyserver.integration.configuration.configuration;
+package org.example.currencyserver.integration.configuration;
 
 import static org.example.currencyserver.TestingConstants.EUR;
 import static org.example.currencyserver.TestingConstants.USD;
@@ -31,6 +31,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.util.AopTestUtils;
 
+/**
+ * Integration test for rates caching in a simulated context with the mocking of the containing class.
+ */
 @ContextConfiguration
 @ExtendWith(SpringExtension.class)
 class RateContextCacheTests {
@@ -83,6 +86,9 @@ class RateContextCacheTests {
         verify(mockClient, times(2)).fetchSimpleRate(EUR, USD);
     }
 
+    /**
+     * Test caching configuration, mimicking the original one for the rates cache manager.
+     */
     @EnableCaching
     @Configuration
     public static class CachingTestConfiguration {

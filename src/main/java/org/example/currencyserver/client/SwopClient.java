@@ -15,7 +15,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestClientException;
 
-@Component // todo: scope?
+/**
+ * Acts as rest web client for communication with SWOP server. Retrieves currency and conversion rates data.
+ */
+@Component
 public class SwopClient {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SwopClient.class.getSimpleName());
@@ -27,6 +30,11 @@ public class SwopClient {
         this.restClient = restClientBuilder.build();
     }
 
+    /**
+     * Fetches all the available currencies.
+     *
+     * @return a list of currencies.
+     */
     public List<Currency> fetchAvailableCurrencies() {
         return restClient.get()
                 .uri("/currencies")
@@ -35,6 +43,13 @@ public class SwopClient {
                 });
     }
 
+    /**
+     * Fetches a conversion rate between two currency.
+     *
+     * @param baseCurrency  the currency to convert from.
+     * @param quoteCurrency the currency to convert to.
+     * @return the conversion rate.
+     */
     @Cacheable(cacheNames = "rates", key = "#baseCurrency + #quoteCurrency", cacheManager = "rates-cache-manager")
     public Rate fetchSimpleRate(final String baseCurrency, final String quoteCurrency) {
         return restClient.get()

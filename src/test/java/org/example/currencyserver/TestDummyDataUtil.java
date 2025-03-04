@@ -7,8 +7,16 @@ import java.util.List;
 
 import org.example.currencyserver.model.Currency;
 
+/**
+ * Utility class that provides method to create dummy data.
+ */
 public class TestDummyDataUtil {
 
+    /**
+     * Creates a list of valid dummy currencies.
+     *
+     * @return a list of currencies.
+     */
     public static List<Currency> createDummyCurrencyList() {
         return List.of(
                 new Currency(EUR, "", true),
@@ -17,6 +25,11 @@ public class TestDummyDataUtil {
         );
     }
 
+    /**
+     * Creates a list of invalid dummy currencies.
+     *
+     * @return a list of currencies.
+     */
     public static List<Currency> createDummyInvalidCurrencyList() {
         return List.of(
                 new Currency("", "", true),
