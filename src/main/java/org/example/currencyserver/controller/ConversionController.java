@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin("http://localhost:3000")
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/conversion/v1/")
+@RequestMapping("/conversion/v1")
 public class ConversionController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ConversionController.class.getSimpleName());
