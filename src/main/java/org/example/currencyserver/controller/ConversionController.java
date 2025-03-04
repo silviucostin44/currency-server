@@ -2,11 +2,11 @@ package org.example.currencyserver.controller;
 
 import java.util.List;
 
+import lombok.RequiredArgsConstructor;
 import org.example.currencyserver.model.Currency;
 import org.example.currencyserver.service.ConversionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin("http://localhost:3000")
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/conversion/v1/")
 public class ConversionController {
@@ -22,11 +23,6 @@ public class ConversionController {
     private static final Logger LOGGER = LoggerFactory.getLogger(ConversionController.class.getSimpleName());
 
     private final ConversionService conversionService;
-
-    @Autowired
-    public ConversionController(final ConversionService conversionService) {
-        this.conversionService = conversionService;
-    }
 
     @GetMapping("/currencies")
     public List<Currency> getAvailableCurrencies() {

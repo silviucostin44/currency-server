@@ -2,6 +2,7 @@ package org.example.currencyserver.client;
 
 import java.util.List;
 
+import org.example.currencyserver.common.exception.ErrorMessages;
 import org.example.currencyserver.model.Currency;
 import org.example.currencyserver.model.Rate;
 import org.slf4j.Logger;
@@ -22,7 +23,7 @@ public class SwopClient {
     private final RestClient restClient;
 
     @Autowired
-    public SwopClient(final RestClient.Builder restClientBuilder/*, final CacheManager cacheManager*/) {
+    public SwopClient(final RestClient.Builder restClientBuilder) {
         this.restClient = restClientBuilder.build();
     }
 
@@ -41,10 +42,8 @@ public class SwopClient {
                 .retrieve()
                 .onStatus(status -> status.isSameCodeAs(HttpStatusCode.valueOf(403)),
                           (request, response) -> {
-                              final String errorMessage =
-                                      "Request to SWOP for simple rate failed with 403 error status. Please check the format of the currencies or the ApiKey";
-                              LOGGER.error(errorMessage);
-                              throw new RestClientException(errorMessage);
+                              LOGGER.error(ErrorMessages.CLIENT_ERROR_MESSAGE_403);
+                              throw new RestClientException(ErrorMessages.CLIENT_ERROR_MESSAGE_403);
                           })
                 .body(Rate.class);
     }

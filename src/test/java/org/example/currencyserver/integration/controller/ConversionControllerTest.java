@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assumptions.assumeFalse;
 
 import java.util.List;
 
+import org.example.currencyserver.common.exception.ErrorMessages;
 import org.example.currencyserver.controller.ConversionController;
 import org.example.currencyserver.model.Currency;
 import org.junit.jupiter.api.Test;
@@ -60,7 +61,7 @@ public class ConversionControllerTest {
         RestClientException restClientException =
                 assertThrows(RestClientException.class, () -> conversionController.convert(baseCurrency, USD, 100d));
         assertEquals(
-                "Request to SWOP for simple rate failed with 403 error status. Please check the format of the currencies or the ApiKey",
+                ErrorMessages.CLIENT_ERROR_MESSAGE_403,
                 restClientException.getMessage());
     }
 

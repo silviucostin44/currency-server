@@ -2,6 +2,7 @@ package org.example.currencyserver.configuration.client;
 
 import java.io.IOException;
 
+import org.apache.hc.core5.http.HttpHeaders;
 import org.example.currencyserver.client.SwopClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpRequest;
+import org.springframework.http.MediaType;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestClient;
@@ -18,7 +20,6 @@ public class SwopRestClientBuilder {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SwopClient.class.getSimpleName());
 
-    private static final String AUTH_HEADER = "Authorization";
     private static final String AUTH_TYPE = "ApiKey";
 
     @Value("${swop.url}")
@@ -37,7 +38,8 @@ public class SwopRestClientBuilder {
                     return logResponse(request.getURI().getPath(), response);
                 }))
                 .baseUrl(baseUrl)
-                .defaultHeader(AUTH_HEADER, AUTH_TYPE + " " + apiKey);
+                .defaultHeader(HttpHeaders.AUTHORIZATION, AUTH_TYPE + " " + apiKey)
+                .defaultHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
     }
 
     private void logRequest(final HttpRequest request) {
