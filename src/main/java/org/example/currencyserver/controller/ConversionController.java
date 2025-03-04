@@ -51,7 +51,7 @@ public class ConversionController {
     @GetMapping("/convert/{base}/{quote}")
     public double convert(@PathVariable() String base,
                           @PathVariable String quote,
-                          @RequestParam() double amount) {  // todo: validate amount isn't too big
+                          @RequestParam() double amount) {
         LOGGER.info("Incoming request for: convert {} to {}", base, quote);
         double computedAmount = conversionService.convertCurrency(base, quote, amount);
         LOGGER.debug("Computed conversion from {}{} to {}{}", amount, base, computedAmount, quote);
