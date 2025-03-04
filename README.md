@@ -9,13 +9,14 @@ it using the ```java -jar``` command.
 
 * Clone this repository
 * Make sure you are using JDK 17 and Maven 3.x
-* You can build the project and run the tests by running ```mvn clean package```
+* You can build the project and run the tests by running ```mvn clean package```, or only build without the tests with ```mvn clean package -DskipTests``` 
 * Once successfully built, you can run the service by one of these two methods:
 
 ```
-        java -jar target/currency-server-0.0.1-SNAPSHOT.war
+        java -jar target/currency-server-0.0.1-SNAPSHOT.jar
 or
-        mvn spring-boot:run
+        mvn spring-boot:run 
+        (the second option is doing both building and running)
 ```
 
 * Check the stdout or boot_example.log file to make sure no exceptions are thrown
@@ -23,8 +24,8 @@ or
 Once the application runs you should see something like this
 
 ```
-2017-08-29 17:31:23.091  INFO 19387 --- [           main] s.b.c.e.t.TomcatEmbeddedServletContainer : Tomcat started on port(s): 8090 (http)
-2017-08-29 17:31:23.097  INFO 19387 --- [           main] com.khoubyari.example.Application        : Started Application in 22.285 seconds (JVM running for 23.032)
+2025-03-04T20:57:13.827+02:00  INFO 15452 --- [currency-server] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-03-04T20:57:13.875+02:00  INFO 15452 --- [currency-server] [           main] o.e.c.CurrencyServerApplication          : Started CurrencyServerApplication in 7.555 seconds (process running for 9.863)
 ```
 
 ## About the Service
