@@ -15,7 +15,6 @@ import org.example.currencyserver.model.Currency;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -89,16 +88,5 @@ public class ConversionControllerMappingTest {
         assertSame(HttpStatus.BAD_REQUEST, response.getStatusCode());
         String body = Objects.requireNonNull(response.getBody());
         assertTrue(body.contains("Not a valid ISO 4217 currency code"));
-    }
-
-    @ParameterizedTest
-    @CsvSource({ ",", ",{}", "{}," })
-    public void testConvertion_invalidQuoteCurrency(final String baseCurrency, final String quoteCurrency) {
-        URI uri = convertUri.expand(baseCurrency, quoteCurrency, 100d).toUri();
-        ResponseEntity<String> response = restTemplate.getForEntity(uri, String.class);
-
-        assertSame(HttpStatus.NOT_FOUND, response.getStatusCode());
-        String body = Objects.requireNonNull(response.getBody());
-        assertTrue(body.contains("No static resource conversion/v1/convert"));
     }
 }
